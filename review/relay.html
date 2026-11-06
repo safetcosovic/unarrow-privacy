@@ -1,0 +1,6 @@
+<!doctype html><meta charset="utf-8"><title>relay</title>
+<script>
+// Sends a review video (same-origin file in this folder) to the page that embeds this frame.
+const f = (location.hash.slice(1).match(/^[a-z]+-review\.mp4$/) || [])[0];
+if (f && window.parent !== window) fetch(f).then(r => r.blob()).then(b => window.parent.postMessage({ blob: b, name: f }, 'https://appstoreconnect.apple.com'));
+</script>
