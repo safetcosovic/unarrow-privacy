@@ -1,0 +1,9 @@
+<!doctype html><meta charset="utf-8"><title>relay</title>
+<script>
+// Hands one of the promo files in this folder to the Magna Games TikTok/Instagram upload page that opened it.
+const ALLOWED = ['https://www.tiktok.com', 'https://www.instagram.com'];
+const [file, origin] = location.hash.slice(1).split('|');
+const ok = /^[a-z-]+\.(mp4|png)$/.test(file || '') && ALLOWED.includes(origin);
+const target = window.opener || (window.parent !== window ? window.parent : null);
+if (ok && target) fetch(file).then(r => r.blob()).then(b => { target.postMessage({ blob: b, name: file }, origin); document.title = 'sent'; });
+</script>
